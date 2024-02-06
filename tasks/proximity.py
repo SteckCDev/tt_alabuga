@@ -1,25 +1,24 @@
 def lists_proximity(first_list: tuple[int, ...], second_list: tuple[int, ...]):
-    min_array_length = min(len(first_list), len(second_list))
-
     proximity = 0
-    
-    for i in range(min_array_length):
-        if first_list[i] != second_list[i]:
-            break
+
+    for f, s in zip(first_list, second_list):
+        if f != s:
+            return proximity
 
         proximity += 1
-    
+
     return proximity
 
 
 def two_dim_array_proximity(two_dim_array: list[tuple[int, ...]]) -> int:
-    two_dim_array_len = len(two_dim_array)
-
+    """
+    Оптимизированный вариант, первое решение доступно в истории коммитов
+    """
     total_proximity = 0
 
-    for i in range(two_dim_array_len):
-        for j in range(i + 1, two_dim_array_len):
-            total_proximity += lists_proximity(two_dim_array[i], two_dim_array[j])
+    for i, first_list in enumerate(two_dim_array):
+        for second_list in two_dim_array[i + 1:]:
+            total_proximity += lists_proximity(first_list, second_list)
 
     return total_proximity
 

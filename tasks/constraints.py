@@ -3,21 +3,22 @@ def relevant_rows_sum(
     table: list[tuple[int, ...]],
     constraints: list[tuple[str, str, int]]
 ) -> int:
-    relevant_rows_sum = 0
+    """
+    Оптимизированный вариант, первое решение доступно в истории коммитов
+    """
+    columns_indices = {column_value: column_id for column_id, column_value in enumerate(columns)}
+    rows_passed_condition_indicies: list[int] = [i for i, _ in enumerate(table)]
 
-    for row in table:
-        for constr_column, constr_condition, constr_value in constraints:
-            constr_column_index = columns.index(constr_column)
-            value = row[constr_column_index]
+    for c_column, c_condition, c_value in constraints:
+        c_column_index = columns_indices[c_column]
 
-            conidition = value > constr_value if constr_condition == ">" else value < constr_value
+        for row_id in rows_passed_condition_indicies:
+            row_value = table[row_id][c_column_index]
 
-            if not conidition:
-                break
-        else:
-            relevant_rows_sum += sum(row)
-            
-    return relevant_rows_sum
+            if row_value <= c_value if c_condition == ">" else row_value >= c_value:
+                rows_passed_condition_indicies.remove(row_id)
+
+    return sum(sum(table[row_id]) for row_id in rows_passed_condition_indicies)
 
 
 def main() -> None:
