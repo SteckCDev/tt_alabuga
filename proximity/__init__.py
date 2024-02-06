@@ -1,0 +1,1 @@
+from .proximity import two_dim_array_proximity as two_dim_array_proximity
