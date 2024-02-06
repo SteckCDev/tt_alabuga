@@ -1,6 +1,6 @@
 import pytest
 
-from lizards import lizard_existence_days
+from tasks.lizards import lizard_existence_days, lizard_existence_days_no_datetime
 
 
 @pytest.mark.parametrize(
@@ -28,5 +28,11 @@ def test_lizard_existence_time(
 ) -> None:
     assert (result_days, result_seconds_left) == lizard_existence_days(
         start_exact=start_exact,
-        end_exact=end_exact,
+        end_exact=end_exact
+    )
+
+    # must have the same behaviour
+    assert (result_days, result_seconds_left) == lizard_existence_days_no_datetime(
+        start_exact=start_exact,
+        end_exact=end_exact
     )

@@ -1,6 +1,6 @@
 import pytest
 
-from proximity import two_dim_array_proximity
+from tasks.proximity import two_dim_array_proximity
 
 
 @pytest.mark.parametrize(
